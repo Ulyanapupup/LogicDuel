@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Режим 1.2 - Компьютер угадывает</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+    body {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+    *{
+      padding: 0;
+      margin: 0;
+    }
+    .container{
+      width: 85%;
+      margin: 0 auto;
+    }
+    .fon{
+    background: linear-gradient(180deg,rgba(184, 113, 35, 1) 0%, rgba(26, 14, 1, 1) 100%);
+    min-height: 100vh
+    }
+    header {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .logo-block {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .logo-img {
+        width: 50px;
+        height: auto;
+    }
+
+    .site-title {
+        font-size: 32px;
+        color: rgb(0, 0, 0);
+    }
+    .btn {
+    background: #D59336;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #8a520e;
+    }
+    
+    .chat-container {
+      width: 100%;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    #messages {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+    
+    .chat-input {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    
+    #answer {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+    
+    .info-panel {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    .range-selector {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    .secret-input {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    .game-status {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    select, input {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+    
+    .message {
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      border-radius: 18px;
+      max-width: 70%;
+      word-wrap: break-word;
+      font-size: 18px;
+    }
+    
+    .user-message {
+      background-color: #D59336;
+      margin-left: auto;
+      border-bottom-right-radius: 0;
+      color: white;
+    }
+    
+    .system-message {
+      background-color: #f1f1f1;
+      margin-right: auto;
+      border-bottom-left-radius: 0;
+    }
+
+    @media (max-width: 900px) {
+      .chat-input {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .chat-input input#answer {
+        width: 100%;
+      }
+
+      .chat-input button.btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="fon">
+    <div class="container">
+      <header>
+        <div class="logo-block">
+          <img src="/static/image/logo.svg" alt="Логотип" class="logo-img" />
+          <h1 class="site-title">Logic Duel</h1>
+        </div>
+        <h1 class="game-title">Компьютер угадывает число</h1>
+      </header>
+
+      <div class="range-selector" id="range-selector">
+        <h2>Выберите диапазон чисел</h2>
+        <select id="range-select">
+          <option value="0_100">0 — 100</option>
+          <option value="-100_100">-100 — 100</option>
+          <option value="-1000_1000">-1000 — 1000</option>
+          <option value="custom">Свой диапазон</option>
+        </select>
+        
+        <div id="custom-range" class="hidden" style="margin-top: 10px;">
+          От: <input type="number" id="custom-min" style="width: 80px;">
+          До: <input type="number" id="custom-max" style="width: 80px;">
+        </div>
+        
+        <button onclick="selectRange()" class="btn" style="margin-top: 10px;">Выбрать диапазон</button>
+      </div>
+
+      <div class="secret-input hidden" id="secret-input">
+        <h2>Загадайте число</h2>
+        <p>Диапазон: от <span id="current-min">0</span> до <span id="current-max">100</span></p>
+        <input type="number" id="user-secret" placeholder="Введите загаданное число">
+        <button onclick="startGame()" class="btn">Начать игру</button>
+      </div>
+
+      <div class="game-status hidden" id="game-status">
+        <p>Загаданное число: <span id="secret-number-display">не указано</span></p>
+      </div>
+
+      <div class="chat-container">
+        <div id="messages">
+          <div class="message system-message">Выберите диапазон и загадайте число, чтобы начать игру</div>
+        </div>
+        <div class="chat-input">
+          <input id="answer" placeholder="да / нет" disabled>
+          <button onclick="processAnswer()" class="btn" disabled>Отправить</button>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; text-align: center;">
+        <a href="/mode_selection" class="btn">Выйти в меню</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let minRange = 0;
+    let maxRange = 100;
+    let gameId = null;
+
+    function selectRange() {
+      const rangeSelect = document.getElementById('range-select');
+      const customRange = document.getElementById('custom-range');
+      
+      if (rangeSelect.value === 'custom') {
+        minRange = parseInt(document.getElementById('custom-min').value);
+        maxRange = parseInt(document.getElementById('custom-max').value);
+        
+        if (isNaN(minRange) || isNaN(maxRange) || minRange >= maxRange) {
+          alert('Пожалуйста, введите корректный диапазон');
+          return;
+        }
+      } else {
+        [minRange, maxRange] = rangeSelect.value.split('_').map(Number);
+      }
+      
+      document.getElementById('range-selector').classList.add('hidden');
+      document.getElementById('secret-input').classList.remove('hidden');
+      document.getElementById('current-min').textContent = minRange;
+      document.getElementById('current-max').textContent = maxRange;
+      
+      // Очищаем чат и выводим новое сообщение
+      document.getElementById('messages').innerHTML = '';
+      appendToChat('Система', `Выбран диапазон: от ${minRange} до ${maxRange}. Загадайте число и нажмите "Начать игру".`);
+    }
+
+    document.getElementById('range-select').addEventListener('change', function() {
+      const customRange = document.getElementById('custom-range');
+      customRange.classList.toggle('hidden', this.value !== 'custom');
+    });
+
+    function appendToChat(sender, text) {
+      const messages = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.className = sender === 'Вы' ? 'message user-message' : 'message system-message';
+      div.innerHTML = `<strong>${sender}:</strong> ${text}`;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function startGame() {
+      const secret = parseInt(document.getElementById('user-secret').value);
+      
+      if (isNaN(secret) || secret < minRange || secret > maxRange) {
+        alert(`Пожалуйста, введите число от ${minRange} до ${maxRange}`);
+        return;
+      }
+      
+      document.getElementById('secret-input').classList.add('hidden');
+      document.getElementById('game-status').classList.remove('hidden');
+      document.getElementById('secret-number-display').textContent = secret;
+      document.getElementById('answer').disabled = false;
+      document.querySelector('.chat-input button').disabled = false;
+      
+      fetch('/start_game_1_2', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          secret: secret, 
+          min_range: minRange, 
+          max_range: maxRange 
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          alert(data.error);
+          return;
+        }
+        
+        gameId = data.game_id;
+        document.getElementById('messages').innerHTML = '';
+        appendToChat('Система', `Я буду угадывать ваше число от ${minRange} до ${maxRange}.`);
+        appendToChat('Система', data.question);
+      });
+    }
+
+    function processAnswer() {
+      const answerInput = document.getElementById('answer');
+      const answer = answerInput.value.trim().toLowerCase();
+
+      if (answer !== 'да' && answer !== 'нет') {
+        alert('Пожалуйста, введите "да" или "нет"');
+        return;
+      }
+
+      appendToChat('Вы', answer);
+      answerInput.value = '';
+
+      fetch('/answer_1_2', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ game_id: gameId, answer })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          alert(data.error);
+          return;
+        }
+
+        appendToChat('Система', data.response);
+
+        if (data.done) {
+          document.getElementById('answer').disabled = true;
+          document.querySelector('.chat-input button').disabled = true;
+          
+          // Добавляем сообщение о завершении игры
+          if (data.response.startsWith("Ура")) {
+            appendToChat('Система', 'Игра завершена! Я угадала ваше число!');
+          } else {
+            appendToChat('Система', 'Игра завершена! Я не смогла угадать ваше число.');
+          }
+        }
+      });
+    }
+
+    // Инициализация - скрываем ненужные элементы при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('secret-input').classList.add('hidden');
+      document.getElementById('game-status').classList.add('hidden');
+    });
+  </script>
+</body>
+</html>

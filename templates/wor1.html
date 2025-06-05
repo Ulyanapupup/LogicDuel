@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title> Wordly</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wor1.css') }}" />
+</head>
+<body>
+<div class="fon">
+        <header>
+            <div class="logo-block">
+                <img src="{{ url_for('static', filename='image/logo.svg') }}" alt="logo-img"/>
+                <h1 class="site-title">Logic Duel</h1>
+            </div>
+            <h1 class="game-title">Wordly</h1>
+        </header>
+        <div class="container">
+        <div id="setup">
+            <label for="wordLength">Выберите длину слова (5-7):</label>
+            <input type="number" id="wordLength" min="5" max="7" value="5" />
+            <button id="startBtn" class="btn">Начать игру</button>
+        </div>
+        <div id="game" class="hidden">
+            <h2>Угадайте слово</h2>
+            <input type="text" id="guessInput" maxlength="7" autocomplete="off" />
+            <button id="guessBtn" class="btn">Проверить</button>
+
+            <div id="guesses"></div>
+            <div id="message"></div>
+            <div class="menu">
+                <button id="restartBtn" class="btn"> Заново </button>
+                <button class="btn"><a href="/mode_selection">Выход</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/wor1.js') }}"></script>
+</body>
+</html>

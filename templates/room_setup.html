@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Создать или войти в комнату</title>
+</head>
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+.fon{
+  min-height: 100vh;
+  background: linear-gradient(180deg,rgba(184, 113, 35, 1) 0%, rgba(26, 14, 1, 1) 100%);
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 23px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.container {
+  width: 45%;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+}
+
+/* Шапка */
+header {
+  width: 85%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30px 0;
+  gap: 20px;
+}
+
+.logo-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-img {
+  width: 50px;
+  height: auto;
+}
+.game-title {
+  font-size: 32px;
+}
+.btn {
+  padding: 12px 20px;
+  background: #D59336;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 29px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: fit-content;
+}
+
+.btn:hover {
+  background: #bb7e2e;
+  transform: scale(1.03);
+}
+.join1 {
+  text-align: center;
+  padding: 20px 0;
+}
+.join1 .label{
+  font-size: 25px;
+}
+
+.join1 h2 {
+  font-size: 25px;
+  padding-bottom: 20px;
+}
+
+.join1 input[type="text"] {
+  font-size: 25px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 70%;
+  max-width: 300px;
+  margin-bottom: 10px;
+}
+
+.join1 .btn {
+  font-size: 25px;
+  padding: 8px 16px;
+}
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.btn-row .btn {
+  flex: 1;
+  font-size: 23px;
+  padding: 10px;
+}
+@media (max-width: 1000px) {
+  .container{
+    width: 70%;
+  }
+}
+</style>
+<body>
+  <div class="fon">
+    
+      <header>
+        <div class="logo-block">
+          <img src="{{ url_for('static', filename='image/logo.svg') }}" alt="logo-img"/>
+          <h1 class="site-title">Logic Duel</h1>
+        </div>
+        <h1 class="game-title">Угадай число</h1>
+      </header>
+      <div class="container">
+        <div class="join1">
+          <h2>Создать новую случайную комнату</h2>
+          <form id="createForm" action="/game" method="get">
+            <input type="hidden" name="room" id="generatedRoomCode" />
+            <button type="submit" id="createBtn" class="btn">Создать комнату</button>
+          </form>
+        </div>
+        <div class="join1">
+          <h2>Войти в существующую комнату</h2>
+          <form action="/game" method="get">
+            <label for="roomInput">Введите код комнаты:</label>
+            <input type="text" name="room" id="roomInput" required maxlength="6" pattern="[A-Z0-9]{6}" title="6 заглавных букв или цифр" />
+            <div class="btn-row">
+              <button type="submit" class="btn">Войти</button>
+              <button onclick="window.location.href='/'" class="btn">Назад на главную</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+  <script>
+    // Генерируем код комнаты до отправки формы создания
+    document.getElementById('createBtn').addEventListener('click', function(e) {
+      const roomCode = Math.random().toString(36).substr(2, 6).toUpperCase();
+      document.getElementById('generatedRoomCode').value = roomCode;
+    });
+  </script>
+</body>
+</html>
+

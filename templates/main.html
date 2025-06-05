@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Logic Duel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+</head>
+<body>
+    <div class="fon">
+        <header class="container">
+            <span class="logo">
+				<img src="{{ url_for('static', filename='image/logo.svg') }}" alt="logo-img"/>
+                <h1>Logic Duel</h1>
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="#guess-number">Угадай число</a></li>
+                    <li><a href="#numbly">Numbly</a></li>
+                    <li><a href="#wordly">Wordly</a></li>
+                    <li class="btn"><a href="/mode_selection">Играть</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="description container">
+            <div class="info">
+                <div class="info-text">
+                    <h1>Мы, студенты второго курса университета ИГУ — Алёна, Настя и Ульяна, рады приветствовать вас на нашем сайте!</h1>
+                    <h2>Здесь вы найдете несколько увлекательных игр, созданных для тренировки логического мышления и весёлого времяпрепровождения.</h2>
+                    <h2>Надеемся, что наши игры подарят вам множество положительных эмоций и интересные моменты. Играйте, получайте удовольствие и развивайтесь вместе с нами!</h2>
+                </div>
+            </div>
+			<img src="{{ url_for('static', filename='image/img1.svg') }}" alt="Иллюстрация с играми"/>
+        </div>
+        <hr class="divider" id="guess-number"/>
+        <div class="name container" >
+            <h1>Угадай число</h1>
+        </div>
+
+        <div class="modes-section container">
+            <div class="choice1 container">
+                <h1>Игроки могут выбирать между различными режимами</h1>
+				<img src="{{ url_for('static', filename='image/rule1.png') }}" alt="Режимы игры"/>
+            </div>
+
+            <div class="rule container">
+                <h1>Правила</h1>
+                <div class="rule-text">
+                    <h2>Вводите числа: Попробуйте угадать загаданное число,с помощью вопросов вводя из в окно вопрос, исходя их этого вводи свои варианты в специальное окно ответов.</h2>
+                    <h2>Получайте подсказки: После каждой попытки вы будете получать подсказку.</h2>
+                    <h2>Используйте шансы: У вас есть неограниченное количество попыток, но постарайтесь угадать число с как можно меньшим количеством ходов!</h2>
+                </div>
+            </div>
+        </div>
+
+        <hr class="divider" id="numbly"/>
+
+        <div class="name container">
+            <h1>Numbly</h1>
+        </div>
+        <div class="modes-section container">
+            <div class="rule">
+                <h1>Правила</h1>
+                <div class="rule-text">
+                    <h3><h2>Вводите числа: Попробуйте угадать загаданное число,с помощью вопросов вводя из в окно вопрос, исходя их этого вводи свои варианты в специальное окно ответов.</h2>
+                    <h2>Получайте подсказки: После каждой попытки вы будете получать подсказку.</h2>
+                    <h2>Используйте шансы: У вас есть неограниченное количество попыток, но постарайтесь угадать число с как можно меньшим количеством ходов!</h2></h3>
+                </div>
+            </div>
+            <div class="choice1">
+                <h1>Игроки могут выбирать между различными режимами</h1>
+				<img src="{{ url_for('static', filename='image/rule2.png') }}" alt="Режимы игры"/>
+            </div>
+        </div>
+
+        <hr class="divider" id="wordly"/>
+
+        <div class="name container">
+            <h1>Wordly</h1>
+        </div>
+        <div class="modes-section container">
+            <div class="rule">
+                <h1>Правила</h1>
+                <div class="rule-text">
+                    <h3><h2>Вводите числа: Попробуйте угадать загаданное число,с помощью вопросов вводя из в окно вопрос, исходя их этого вводи свои варианты в специальное окно ответов.</h2>
+                    <h2>Получайте подсказки: После каждой попытки вы будете получать подсказку.</h2>
+                    <h2>Используйте шансы: У вас есть неограниченное количество попыток, но постарайтесь угадать число с как можно меньшим количеством ходов!</h2></h3>
+                </div>
+            </div>
+            <div class="choice1">
+                <h1>Игроки могут выбирать между различными режимами</h1>
+				<img src="{{ url_for('static', filename='image/rule2.png') }}" alt="Режимы игры"/>
+            </div>
+        </div>
+
+        <hr class="divider"/>
+        <footer class="site-footer container">
+            <p>© 2025 Logic Duel. Все права защищены.</p>
+            <p>Сайт создан студентами Иркутского государственного университета: Поздняк Ульяной, Ширяевой Анастасией и Скорняковой Алёной</p>
+        </footer>
+    </div>
+</body>
+</html>

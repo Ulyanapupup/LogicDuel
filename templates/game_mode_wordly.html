@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wordly Game</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+  <style>
+    /* Дополнительные стили специфичные для Wordly */
+    .letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 3px;
+      text-align: center;
+      line-height: 1;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      user-select: none;
+      font-size: 20px;
+      font-weight: bold;
+      transition: all 0.2s;
+      border-radius: 8px;
+      background-color: white;
+    }
+    
+    .green {
+      background-color: #4caf50;
+      color: white;
+    }
+    
+    .yellow {
+      background-color: #ffc107;
+      color: black;
+    }
+    
+    .game-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 20px;
+    }
+    
+    .game-section, .resultsSection {
+      width: 48%;
+      padding: 20px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .guess-row {
+      display: flex;
+      margin-bottom: 10px;
+      gap: 5px;
+      justify-content: flex-start;
+    }
+    
+    #guessInput, #secretWord {
+      width: 100%;
+      padding: 12px;
+      font-size: 20px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      background-color: white;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    
+    #gameInfo {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff8e19c;
+      border-radius: 8px;
+    }
+    
+    #lobby {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    #roomIdInput {
+      padding: 12px;
+      font-size: 20px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 300px;
+      margin: 10px 0;
+      text-align: center;
+    }
+    
+    #wordLength {
+      padding: 8px;
+      font-size: 18px;
+      border-radius: 8px;
+      margin-left: 10px;
+      max-width: 120px;
+      display: inline-block;
+    }
+    
+    .hidden {
+      display: none;
+    }
+
+    #guessHistory {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    #guessResults {
+      margin-top: 20px;
+    }
+
+    #evaluationSection {
+      margin-bottom: 20px;
+    }
+
+    #evaluationSection p {
+      margin-bottom: 10px;
+    }
+
+    /* Стили для кнопки "Покинуть игру" */
+    #leaveGame, #leaveLobby {
+      padding: 12px 24px;
+      width: auto;
+      min-width: 150px;
+      font-size: 18px;
+      margin: 10px auto;
+      display: block;
+    }
+
+    /* Стили для статуса игры */
+    #gameStatus {
+      color: white;
+      font-size: 18px;
+      margin-top: 20px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* Отступ для кнопки submitEvaluation */
+    #submitEvaluation {
+      margin-top: 15px;
+    }
+
+    /* Общие стили текста */
+    h1, h2, h3, p, label {
+      transition: font-size 0.3s ease;
+    }
+
+    /* Адаптивные стили */
+    @media (max-width: 1250px) {
+      .game-section, .resultsSection {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .game-container {
+        flex-direction: column;
+      }
+
+      #guessInput, #secretWord {
+        font-size: 18px;
+        padding: 10px;
+      }
+
+      .letter {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+      }
+
+      h2 {
+        font-size: 1.1em;
+      }
+      h3 {
+        font-size: 1em;
+      }
+      p, label, .btn {
+        font-size: 1em;
+      }
+
+      #leaveGame, #leaveLobby {
+        font-size: 16px;
+        min-width: 130px;
+        padding: 10px 20px;
+      }
+
+      #gameStatus {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+      }
+
+      .game-title {
+        margin-top: 10px;
+        font-size: 1.8em;
+      }
+
+      #lobby {
+        padding: 15px;
+      }
+
+      #guessInput, #secretWord {
+        font-size: 16px;
+        padding: 8px;
+      }
+
+      .letter {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+      }
+
+      .btn {
+        padding: 10px 15px;
+        font-size: 16px;
+      }
+
+      #roomIdInput {
+        font-size: 16px;
+        padding: 10px;
+      }
+
+      #wordLength {
+        font-size: 16px;
+        max-width: 100px;
+      }
+
+      h2 {
+        font-size: 1.4em;
+      }
+      h3 {
+        font-size: 1.2em;
+      }
+      p, label {
+        font-size: 0.95em;
+      }
+
+      #submitEvaluation {
+        margin-top: 12px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: 95%;
+      }
+
+      #lobby {
+        width: 100%;
+        padding: 15px;
+      }
+
+      #wordLength {
+        font-size: 16px;
+        padding: 6px;
+        max-width: 80px;
+        margin-left: 5px;
+      }
+
+      .btn {
+        width: 100%;
+        margin: 5px 0;
+        font-size: 18px;
+        padding: 8px 12px;
+      }
+
+      #leaveGame, #leaveLobby {
+        width: 100%;
+        max-width: 200px;
+      }
+
+      #roomIdInput {
+        max-width: 100%;
+        font-size: 16px;
+      }
+
+      .game-section, .resultsSection {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 1.6em;
+      }
+      h2 {
+        font-size: 1.3em;
+      }
+      h3 {
+        font-size: 1.1em;
+      }
+      p, label {
+        font-size: 0.9em;
+      }
+
+      .letter {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+      }
+
+      #guessInput, #secretWord {
+        font-size: 14px;
+        padding: 6px;
+      }
+
+      #gameStatus {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      #submitEvaluation {
+        margin-top: 10px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 1em;
+      }
+      h2 {
+        font-size: 1em;
+      }
+      h3 {
+        font-size: 1em;
+      }
+      p, label {
+        font-size: 0.7em;
+      }
+
+      .letter {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+      }
+
+      #leaveGame, #leaveLobby {
+        max-width: 180px;
+        font-size: 18px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="fon">
+    <div class="container">
+      <header>
+        <div class="logo-block">
+          <img src="{{ url_for('static', filename='image/logo.svg') }}" alt="logo-img"/>
+          <h1 class="site-title">Logic Duel</h1>
+        </div>
+        <h1 class="game-title">Wordly</h1>
+      </header>
+      
+      <div id="lobby">
+        <h2>Wordly</h2>
+        <div id="wordLengthSelection" style="margin: 15px 0;">
+          <label for="wordLength">Длина слова:</label>
+          <select id="wordLength" class="btn">
+            <option value="5">5 букв</option>
+            <option value="6">6 букв</option>
+            <option value="7">7 букв</option>
+            <option value="8">8 букв</option>
+          </select>
+        </div>
+        <button id="createRoom" class="btn">Создать комнату</button>
+        <p>или</p>
+        <input type="text" id="roomIdInput" placeholder="Введите код комнаты" />
+        <button id="joinRoom" class="btn">Присоединиться</button>
+        <button id="leaveLobby" class="btn">Покинуть игру</button>
+      </div>
+      
+      <div id="game" class="hidden">
+        <button id="leaveGame" class="btn">Покинуть игру</button>
+        <p id="roomCodeDisplay" style="font-weight:bold; margin-top:10px; text-align: center;" class="room-code-display">
+          Код комнаты: <span id="roomCode"></span>
+        </p>
+        
+        <div class="game-container">
+          <div class="game-section">
+            <h2>Ваша зона для догадки</h2>
+            <div id="guessSection" class="hidden">
+              <input type="text" id="guessInput" maxlength="8" placeholder="Введите свое предположение"
+                pattern="[А-Яа-яЁё]{5,8}" title="" />
+              <button id="submitGuess" class="btn">Отправить</button>
+            </div>
+            
+            <div id="gameInfo" class="hidden">
+              <p>Ваше слово: <span id="myWord"></span></p>
+            </div>
+
+            <div id="guessResults">
+              <h3>История догадок</h3>
+              <div id="guessHistory"></div>
+            </div>
+          </div>
+          
+          <div class="game-section">
+            <h2>Зона оценки</h2>
+            <div id="wordSubmission">
+              <input type="text" id="secretWord" maxlength="8" placeholder="Введите ваше слово"
+                pattern="[А-Яа-яЁё]{5,8}" title="" />
+              <button id="submitWord" class="btn">Отправить слово</button>
+            </div>
+            <div id="evaluationSection" class="hidden">
+              <p>Догадка соперника:</p>
+              <div id="opponentGuess"></div>
+              <button id="submitEvaluation" class="btn">Отправить оценку</button>
+            </div>
+          </div>
+          
+          <div id="resultsSection" class="hidden">
+            <h2>Итоги</h2>
+            <p>Ваше слово: <span id="resultMyWord"></span></p>
+            <p>Слово соперника: <span id="resultOpponentWord"></span></p>
+            <p id="resultStatus" style="font-weight:bold; font-size:1.2em;"></p>
+          </div>
+        </div>
+        <div id="gameStatus" style="text-align: center; margin-top: 20px;"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="{{ url_for('static', filename='js/wordly_client.js') }}"></script>
+</body>
+</html>

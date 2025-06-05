@@ -1,0 +1,125 @@
+<!-- templates/game.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Комната {{ room }}</title>
+</head>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+.fon{
+  min-height: 100vh;
+  background: linear-gradient(180deg,rgba(184, 113, 35, 1) 0%, rgba(26, 14, 1, 1) 100%);
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 23px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.container {
+  max-width: 500px;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  text-align: center;
+}
+.container h1{
+  font-size: 26px;
+}
+
+/* Шапка */
+header {
+  width: 85%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30px 0;
+  gap: 20px;
+}
+
+.logo-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-img {
+  width: 50px;
+  height: auto;
+}
+.game-title {
+  font-size: 32px;
+}
+.btn {
+  padding: 12px 20px;
+  background: #D59336;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: fit-content;
+}
+
+.btn:hover {
+  background: #bb7e2e;
+  transform: scale(1.03);
+}
+
+</style>
+
+<body>
+  <div class="fon">
+    <header>
+      <div class="logo-block">
+        <img src="{{ url_for('static', filename='image/logo.svg') }}" alt="logo-img"/>
+        <h1 class="site-title">Logic Duel</h1>
+      </div>
+      <h1 class="game-title">Угадай число</h1>
+    </header>
+    <div class="container">
+      <h1>Код комнаты: {{ room }}</h1>
+      <p>Подключено игроков: <span id="playerCount">{{ player_count }}</span></p>
+      <p id="status"></p>
+
+      {% if is_creator %}
+        <div id="modeSelection" style="display: none;">
+        <button onclick="chooseMode('2.1')" class="btn">Далее</button>
+        </div>
+        <p id="waitingForPlayers" style="display: none;">Ожидаем подключения второго игрока...</p>
+      {% else %}
+        <p>Подождите...</p>
+      {% endif %}
+      
+      <button onclick="window.location.href='/room_setup'" class="btn">Выйти из комнаты</button>
+    </div>
+  </div>
+
+  <script>
+    window.roomCode = "{{ room }}";
+    window.isCreator = {{ 'true' if is_creator else 'false' }};
+    window.sessionId = "{{ session['session_id'] }}";
+  </script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="/static/game.js"></script>
+</body>
+</html>

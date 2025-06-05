@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+
+.fon {
+  min-height: 100vh;
+  background: linear-gradient(180deg, rgba(184, 113, 35, 1) 0%, rgba(26, 14, 1, 1) 100%);
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 23px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 45%;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+}
+
+/* Шапка */
+header {
+  width: 85%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30px 0;
+  gap: 20px;
+}
+
+.logo-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  width: 50px;
+  height: auto;
+}
+
+.game-title {
+  font-size: 32px;
+}
+
+/* Общие стили кнопок */
+.btn {
+  padding: 12px 20px;
+  background: #D59336;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 23px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #bb7e2e;
+  transform: scale(1.03);
+}
+#role-selection h3 {
+  margin-bottom: 20px; /* или больше, если нужно */
+}
+
+/* Группы кнопок в строку */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.button-group .btn {
+  flex: 1;
+}
+
+/* Центрирование заголовков */
+.container h3,
+#status-message {
+  text-align: center;
+  font-size: 29px;
+  padding: 10px 0;
+}
+
+/* Адаптация под узкий экран */
+@media (max-width: 1000px) {
+  .container{
+	width: 70%;
+  }
+}
+</style>
+</head>
+<body>
+	<div class="fon">
+		<header>
+			<div class="logo-block">
+				<img src="{{ url_for('static', filename='image/logo.svg') }}" alt="logo-img"/>
+			<h1 class="site-title">Logic Duel</h1>
+			</div>
+			<h1 class="game-title">Угадай число</h1>
+		</header>
+		<div class="container">
+			<h3>Комната: {{ room }}</h3>
+			<div id="role-selection">
+				<h3>Выберите роль:</h3>
+				<div class="button-group">
+					<button id="role-guesser" class="btn" onclick="chooseRole('guesser')">Угадывающий</button>
+					<button id="role-creator" class="btn" onclick="chooseRole('creator')">Загадывающий</button>
+				</div>
+			</div>
+			<div id="status-message"></div>
+			<div class="button-group">
+				<button id="start-game" disabled class="btn" onclick="startGame()">Играть</button>
+				<button id="leave-game" class="btn">Покинуть игру</button>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+	<script>
+	  // Убедитесь, что переменные определены
+	  window.session_id = "{{ session['session_id'] }}";
+	  window.room = "{{ room }}";
+	</script>
+	<script src="{{ url_for('static', filename='script_2_1.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.fon {
+    min-height: 100vh;
+    height: auto;
+    overflow: hidden;
+    background: linear-gradient(
+        180deg,rgba(217, 217, 217, 1) 2%,
+        rgba(224, 201, 167, 1) 10%,
+        rgba(213, 147, 54, 1) 20%, 
+        rgba(184, 113, 35, 1) 45%, 
+        rgba(224, 201, 167, 1) 67%, 
+        rgba(184, 113, 35, 1) 85%,
+        rgba(96, 59, 34, 1) 99%);
+}
+
+.container {
+    width: 85%;
+    margin: 0 auto;
+}
+
+header {
+    padding: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 32px;
+    width: 50%;
+}
+
+header .logo h1 {
+    margin-left: 15px;
+}
+
+header nav {
+    width: 50%;
+    text-align: right;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+header nav ul li {
+    display: inline-block;
+}
+
+header nav ul li a {
+    color: black;
+    font-size: 27px;
+    padding: 5px 10px;
+}
+
+header nav ul li.btn a {
+    background: #D59336;
+    padding: 9px 17px;
+    border-radius: 17px;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+header nav ul li.btn a:hover {
+    background: #684008;
+}
+
+.info {
+    max-width: 530px;
+    padding: 20px 0;
+}
+.info-text h1,
+.info-text h2 {
+    margin-bottom: 20px;
+}
+
+.description {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 60px 0;
+    flex-wrap: nowrap;
+}
+.description .info {
+    flex: 0 0 40%;
+}
+.description .info-text {
+    text-align: left;
+}
+.description img {
+    flex: 0 0 60%;
+    max-width: 100%;
+    height: auto;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    opacity: 0.5;
+    margin: 40px 0;
+    border: none;
+}
+.name {
+    text-align: center;
+    margin: 50px auto;
+    width: 100%;
+}
+
+.name h1 {
+    display: inline-block;
+    position: relative;
+    font-size: 36px;
+    padding: 0.5em 1em;
+    z-index: 1;
+}
+
+.name h1::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130%;
+    height: 1.8em;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+.modes-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    margin: 60px auto;
+    flex-wrap: wrap;
+}
+
+.choice1,
+.rule {
+    width: 48%;
+}
+
+.choice1 h1,
+.rule h1,
+.rule h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.choice1 img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.rule-text h3 {
+    text-align: center;
+}
+
+.site-footer {
+    color: #fff;
+    padding: 0 0 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.site-footer .container {
+    width: 85%;
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 1250px) {
+    header {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
+    header .logo {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    header .logo h1 {
+        font-size: 29px;
+    }
+
+    header nav {
+        width: 100%;
+        text-align: center;
+    }
+
+    header nav ul {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    header nav ul li a {
+        font-size: 29px;
+        padding: 5px 10px;
+    }
+
+    header nav ul li.btn a {
+        font-size: 29px;
+        padding: 7px 14px;
+    }
+    .description {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .description .info {
+        width: 100%;
+    }
+
+    .description .info-text {
+        text-align: center;
+    }
+
+    .description img {
+        width: 120%;
+        margin-top: 5px;
+    }
+
+    .choice1,
+    .rule {
+        width: 100%;
+    }
+    .choice1 img{
+        width: 70%;
+    }
+}
+@media (max-width: 900px) {
+    .choice1 img{
+        width: 100%;
+    }
+}

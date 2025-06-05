@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Выбор режима</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index1.css') }}" />
+</head>
+<body>
+  <div class="fon">
+    <header class="header container">
+      <div class="logo-block">
+        <img src="{{ url_for('static', filename='image/logo.svg') }}" alt="logo-img"/>
+        <h1 class="site-title">Logic Duel</h1>
+      </div>
+      <a href="/" class="btn">Вернуться на главную</a>
+    </header>
+
+    <h1 class="select-title">Выберите режим игры</h1>
+    <div class="game container"> 
+      <div class="g">
+        <h2>Numbly</h2>
+        <a href="/index" class="btn2">1. Вы отгадываете число</a>
+        <a href="/game/numbly" class="btn2">2. Игра с другом</a>
+      </div>
+      <div class="g">
+        <h2>Угадай число</h2>
+        <a href="/game/1.1" class="btn2">1. Вы отгадываете число</a>
+        <a href="/game_mode_1_2" class="btn2">2. Программа отгадывает ваше число</a>
+        <a href="/room_setup" class="btn2">3. Игра с другом</a>
+      </div>
+      <div class="g">
+        <h2>Wordly</h2>
+        <a href="/game/wordly/single" class="btn2">1. Вы отгадываете слово</a>
+        <a href="/game/wordly" class="btn2">2. Игра с другом</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

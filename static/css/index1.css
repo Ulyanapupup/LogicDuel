@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+}
+.fon{
+    background: linear-gradient(180deg,rgba(184, 113, 35, 1) 0%, rgba(26, 14, 1, 1) 100%);
+    min-height: 100vh
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+.container {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 50px;
+  padding-bottom: 100px;
+  text-align: center;
+}
+
+.logo-block {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-img {
+    width: 50px;
+    height: auto;
+}
+
+.site-title {
+    font-size: 32px;
+    color: rgb(0, 0, 0);
+}
+
+.btn {
+    background: #D59336;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #8a520e;
+}
+
+.select-title {
+    text-align: center;
+    font-size: 32px;
+    color: white;
+}
+
+.game {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px; 
+  justify-content: center;
+  margin-top: 40px;
+  padding-bottom: 50px;
+}
+
+.g {
+  text-align: center;
+  background: #D59336;
+  border-radius: 16px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  color: white;
+  flex-shrink: 0;
+}
+
+.g h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 24px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.g h2::after {
+  content: "";
+  display: block;
+  width: 60%;
+  height: 2px;
+  background-color: white;
+  margin: 10px auto 0;
+}
+.btn2 {
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+  background: #714514;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 18px;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.btn2:hover {
+  background: #bb7e2e;
+  transform: scale(1.03);
+}
+
+.g a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+
+.g a:hover {
+  opacity: 0.8;
+}

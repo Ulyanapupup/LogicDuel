@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+}
+.fon{
+  min-height: 100vh;
+  background: linear-gradient(180deg,rgba(184, 113, 35, 1) 0%, rgba(26, 14, 1, 1) 100%);
+}
+.container {
+    max-width: 50%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #ccc;
+}
+header {
+    width: 85%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 30px 0;
+    gap: 20px;
+}
+
+.logo-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+label {
+  font-family: 'Rubik', sans-serif;
+  font-size: 29px;
+  font-weight: 500;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 23px;
+    box-sizing: border-box;
+}
+.btn {
+  padding: 12px 20px;
+  width: 100%;
+  background: #D59336;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 29px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #bb7e2e;
+  transform: scale(1.03);
+}
+
+.hidden {
+    display: none;
+}
+.guess-row {
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+}
+.letter-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #999;
+    margin: 0 6px;
+    font-weight: bold;
+    font-size: 32px;
+    text-transform: uppercase;
+    user-select: none;
+    border-radius: 6px;
+}
+.correct {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+.present {
+    background-color: #ffc107;
+    color: black;
+    border-color: #ffc107;
+}
+.absent {
+    background-color: #ccc;
+    color: white;
+    border-color: #ccc;
+}
+#message {
+    text-align: center;
+    margin-top: 12px;
+    font-weight: bold;
+}
+.menu {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 25px;
+}
+#guessBtn {
+  margin-bottom: 15px;
+}
+.menu .btn {
+  flex: 1;
+  text-align: center;
+}
+@media(max-width: 950px){
+    .container{
+        width: 90%;
+        max-width: none;
+    }
+
+}

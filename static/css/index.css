@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+
+.fon {
+  min-height: 100vh;
+  background: linear-gradient(180deg,rgba(184, 113, 35, 1) 0%, rgba(26, 14, 1, 1) 100%);
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 29px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 85%;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30px 0;
+  gap: 20px;
+}
+
+.logo-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+label {
+  font-family: 'Rubik', sans-serif;
+  font-size: 29px;
+  font-weight: 500;
+}
+
+.logo-img {
+  width: 50px;
+  height: auto;
+}
+
+.site-title,
+.game-title {
+  font-size: 32px;
+}
+
+.hidden {
+  display: none;
+}
+
+.game-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.setup-block {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.play-area {
+  width: 60%;
+}
+
+.play-area h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 29px;
+}
+
+.guess-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.digit-input,
+.guess-history-cell {
+  width: 50px;
+  height: 50px;
+  font-size: 29px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  color: #000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.digit-input {
+  outline: none;
+}
+
+.guess-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#guessDisplayTable {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guess-history-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.guess-history-cell.correct {
+  background-color: #4caf50;
+  color: white;
+}
+
+.guess-history-cell.yellow {
+  background-color: #ffc107;
+  color: black;
+}
+
+.guess-block {
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 12px 20px;
+  background: #D59336;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 29px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: fit-content;
+}
+
+.btn:hover {
+  background: #bb7e2e;
+  transform: scale(1.03);
+}
+
+#lengthInput {
+  width: 60%;
+  padding: 10px;
+  font-size: 18px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#guessInput {
+  width: 100%;
+  max-width: 400px; /* можно настроить ширину */
+  padding: 10px;
+  font-size: 28px;
+  text-align: center;
+}
+
+@media (min-width: 1400px) {
+  .digit-input,
+  .guess-history-cell {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .digit-input,
+  .guess-history-cell {
+    width: 70px;
+    height: 70px;
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .game-layout {
+    flex-direction: column;
+  }
+
+  .setup-block,
+  .play-area {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

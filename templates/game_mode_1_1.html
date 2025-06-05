@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Угадай число</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+    body {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+    *{
+      padding: 0;
+      margin: 0;
+    }
+    .container{
+      width: 85%;
+      margin: 0 auto;
+    }
+    .fon{
+    background: linear-gradient(180deg,rgba(184, 113, 35, 1) 0%, rgba(26, 14, 1, 1) 100%);
+    min-height: 100vh
+    }
+    header {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .logo-block {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .logo-img {
+        width: 50px;
+        height: auto;
+    }
+
+    .site-title {
+        font-size: 32px;
+        color: rgb(0, 0, 0);
+    }
+    .btn {
+    background: #D59336;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #8a520e;
+    }
+    /* Дополнительные стили для чата и подсказок */
+    .chat-container {
+      width: 100%;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    #messages {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+    
+    .chat-input {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    
+    #question {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+    
+    .guess-area {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .guess-input {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .guess-input input#guess {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .guess-input button.btn {
+      white-space: nowrap;
+      padding: 10px 10px;
+      font-size: 25px;
+    }
+    
+    
+    #guess {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 18px;
+    }
+    
+    #guess-result {
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 18px;
+      text-align: center;
+    }
+    
+    .info-panel {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    
+    .info-content {
+      border-top: 1px solid #eee;
+      padding: 15px;
+      font-size: 18px;
+    }
+    
+    .message {
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      border-radius: 18px;
+      max-width: 40%;
+      word-wrap: break-word;
+      font-size: 18px;
+    }
+    
+    .user-message {
+      background-color: #D59336;
+      margin-left: auto;
+      border-bottom-right-radius: 0;
+    }
+    
+    .system-message {
+      background-color: #D59336;
+      margin-right: auto;
+      border-bottom-left-radius: 0;
+    }
+    
+    #debug-info {
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+      padding: 20px;
+	  display: none;
+	  
+    }
+    @media (max-width: 1250px) {
+        .message {max-width: 70%;}
+    }
+    @media (max-width: 900px) {
+      .chat-input,
+      .guess-input {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .chat-input input#question,
+      .guess-input input#guess {
+        width: 100%;
+      }
+
+      .chat-input button.btn,
+      .guess-input button.btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="fon">
+    <div class="container">
+      <header>
+        <div class="logo-block">
+		<img src="{{ url_for('static', filename='image/logo.svg') }}" alt="logo-img"/>
+          <h1 class="site-title">Logic Duel</h1>
+        </div>
+        <h1 class="game-title">Угадай число</h1>
+      </header>
+      <div style="text-align: center; margin-top: 20px;">
+        <button onclick="startGame()" class="btn">Начать игру</button>
+      </div>
+      <div class="info-panel">
+        <div class="info-header" onclick="toggleInfo()">
+          <h2>Подсказки</h2>
+          <span id="toggle-icon">▼</span>
+        </div>
+        <div class="info-content" id="info-content">
+          <p>Вы можете задавать вопросы, например:</p>
+          <ul>
+            <li>Это число больше/меньше x</li>
+            <li>Число четное</li>
+            <li>Оно кратно x</li>
+            <li>Это простое число</li>
+            <li>Число положительное</li>
+            <li>Число одно/двузначное</li>
+            <li>Число является степенью другого числа</li>
+            <li>Сумма цифр числа больше x</li>
+          </ul>
+          <p>Система будет отвечать "да" или "нет".</p>
+        </div>
+      </div>
+        <div class="chat-container">
+          <div id="messages">
+            <div class="message system-message">Нажмите "Начать игру", чтобы начать</div>
+          </div>
+          <div class="chat-input">
+            <input id="question" placeholder="Введите вопрос..." disabled>
+            <button onclick="ask()" class="btn" disabled>Отправить</button>
+          </div>
+        </div>
+
+        <div class="guess-area">
+          <h2>Попробуйте угадать число</h2>
+          <div class="guess-input">
+            <input id="guess" placeholder="Введите число..." disabled>
+            <button onclick="checkGuess()" class="btn" disabled>Проверить</button>
+          </div>
+          <p id="guess-result"></p>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center;">
+          <a href="/mode_selection" class="btn">Выйти</a>
+        </div>
+
+		<div id="debug-info">Загаданное число: <span id="secret-number-display">не выбрано</span></div>
+    </div>
+  </div>
+
+  <script>
+    let secretNumber = null;
+    const minRange = -100;  // Фиксированный диапазон
+    const maxRange = 100;   // Фиксированный диапазон
+
+    function toggleInfo() {
+      const content = document.getElementById('info-content');
+      const icon = document.getElementById('toggle-icon');
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.textContent = '▼';
+      } else {
+        content.style.display = 'none';
+        icon.textContent = '▶';
+      }
+    }
+
+    function appendToChat(sender, text) {
+      const div = document.createElement('div');
+      div.className = sender === 'Вы' ? 'message user-message' : 'message system-message';
+      div.innerHTML = `<strong>${sender}:</strong> ${text}`;
+      document.getElementById('messages').appendChild(div);
+      document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+    }
+
+    function startGame() {
+      // Генерируем случайное число
+      secretNumber = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+      document.getElementById('secret-number-display').textContent = secretNumber;
+      
+      // Активируем элементы интерфейса
+      document.getElementById('question').disabled = false;
+      document.querySelector('.chat-input button').disabled = false;
+      document.getElementById('guess').disabled = false;
+      document.querySelector('.guess-area button').disabled = false;
+      
+      // Очищаем чат
+      document.getElementById('messages').innerHTML = '';
+      appendToChat('Система', `Игра началась! Загадано число от ${minRange} до ${maxRange}. Попробуйте угадать его или задавайте вопросы.`);
+    }
+
+    function ask() {
+      const q = document.getElementById('question').value;
+      if (!q.trim()) return;
+      appendToChat('Вы', q);
+      fetch('/ask', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          question: q, 
+          mode: "1.1",
+          secret_number: secretNumber,
+          min_range: minRange,
+          max_range: maxRange
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        appendToChat('Система', data.answer);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        appendToChat('Система', 'Произошла ошибка при обработке вопроса');
+      });
+      document.getElementById('question').value = '';
+    }
+
+    function checkGuess() {
+      const guess = parseInt(document.getElementById('guess').value);
+      const result = document.getElementById('guess-result');
+      
+      if (isNaN(guess)) {
+        result.textContent = "Пожалуйста, введите число";
+        result.style.color = "red";
+        return;
+      }
+      
+      if (guess === secretNumber) {
+        result.textContent = "Верно! Вы угадали число!";
+        result.style.color = "green";
+      } else {
+        result.textContent = "Неверно, попробуйте еще раз";
+        result.style.color = "red";
+      }
+      document.getElementById('guess').value = '';
+    }
+
+    // Инициализация - скрываем информационное окно при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('info-content').style.display = 'none';
+      document.getElementById('toggle-icon').textContent = '▶';
+    });
+  </script>
+</body>
+</html>
